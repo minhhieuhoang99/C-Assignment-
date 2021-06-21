@@ -20,7 +20,7 @@ namespace pj1
             {
                 if (member.gender1 == "nam")
                 {
-                    Console.WriteLine("Member: {0},{1},{2},{3},{4},{5},{6},{7}", member.firstName1, member.lastName1, member.dateOfBirth1, member.gender1, member.phoneNumber1, member.birthPlace1, member.age1, member.isGraduated1);
+                    Console.WriteLine($"The Male Member : {member.firstName1} {member.lastName1} ");
                 }
             }
         }
@@ -39,14 +39,14 @@ namespace pj1
                     maxAgeList.Add(maxAgeName);
                 }
             }
-            Console.WriteLine("The oldest Member is : " + " " + maxAgeList.First() + " " + oldest + " " + " year old");
+            Console.WriteLine($"The oldest Member is : {maxAgeList.First()}  {oldest} year old");
         }
 
         static void GetFullName(List<Member> memberList)
         {
             foreach (var member in memberList)
             {
-                Console.WriteLine(member.firstName1 + " " + member.lastName1);
+                Console.WriteLine($"Full Name Member : {member.firstName1} {member.lastName1} ");
             }
         }
 
@@ -59,7 +59,7 @@ namespace pj1
                     {
                         if (member.dateOfBirth1.Year == 2000)
                         {
-                            Console.WriteLine(member.firstName1 + " " + member.lastName1);
+                            Console.WriteLine($"Member Year of Birth = 2000: {member.firstName1} {member.lastName1} ");
                         }
 
                     }
@@ -69,7 +69,7 @@ namespace pj1
                     {
                         if (member.dateOfBirth1.Year < 2000)
                         {
-                            Console.WriteLine(member.firstName1 + " " + member.lastName1);
+                            Console.WriteLine($"Member Year of Birth < 2000: {member.firstName1} {member.lastName1} ");
                         }
                     }
                     break;
@@ -78,7 +78,7 @@ namespace pj1
                     {
                         if (member.dateOfBirth1.Year > 2000)
                         {
-                            Console.WriteLine(member.firstName1 + " " + member.lastName1);
+                            Console.WriteLine($"Member Year of Birth > 2000: {member.firstName1} {member.lastName1} ");
                         }
                     }
                     break;
@@ -89,17 +89,11 @@ namespace pj1
 
         static void GetBornHN(List<Member> memberList)
         {
-            List<string> haNoiList = new List<string>();
-            foreach (var member in memberList)
-            {
-                if (member.birthPlace1 == "HN")
-                {
-                    string name = member.firstName1 + " " + member.lastName1;
-                    haNoiList.Add(name);
-                }
-            }
-            var firstElement = haNoiList.First();
-            Console.WriteLine(firstElement);
+            var bornInHN = (from member in memberList
+                     where member.birthPlace1=="HN"
+                     select member.firstName1 + member.lastName1
+                     ).First();
+            Console.WriteLine($"Member was born in Ha Noi is: {bornInHN}");
         }
 
         public static void SubMenu(List<Member> memberList)
