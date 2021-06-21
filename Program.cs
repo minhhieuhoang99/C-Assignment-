@@ -27,19 +27,22 @@ namespace pj1
 
         static void GetOldest(List<Member> memberList)
         {
-            var ageList = from member in memberList
-                    select member.age1;
-            int oldest = ageList.Max();
-            List<string> maxAgeList = new List<string>();
-            foreach (Member member in memberList)
-            {
-                if (member.age1 == oldest)
-                {
-                    string maxAgeName = member.firstName1 + " " + member.lastName1;
-                    maxAgeList.Add(maxAgeName);
-                }
-            }
-            Console.WriteLine($"The oldest Member is : {maxAgeList.First()}  {oldest} year old");
+            var oldest = (from member in memberList
+                          select member.age1).Max();
+            var oldestMember = (from member in memberList
+                                where member.age1 == oldest
+                                select $" {member.firstName1} {member.lastName1}").First();
+            Console.WriteLine($"The oldest Member is : {oldestMember}  {oldest} year old");
+            // List<string> maxAgeList = new List<string>();
+            // foreach (Member member in memberList)
+            // {
+            //     if (member.age1 == oldest)
+            //     {
+            //         string maxAgeName = member.firstName1 + " " + member.lastName1;
+            //         maxAgeList.Add(maxAgeName);
+            //     }
+            // }
+            // Console.WriteLine($"The oldest Member is : {maxAgeList.First()}  {oldest} year old");
         }
 
         static void GetFullName(List<Member> memberList)
@@ -89,11 +92,25 @@ namespace pj1
 
         static void GetBornHN(List<Member> memberList)
         {
-            var bornInHN = (from member in memberList
-                     where member.birthPlace1=="HN"
-                     select member.firstName1 + member.lastName1
-                     ).First();
-            Console.WriteLine($"Member was born in Ha Noi is: {bornInHN}");
+            // var bornInHN = (from member in memberList
+            //                 where member.birthPlace1 == "HN"
+            //                 select member.firstName1 + member.lastName1
+            //          ).First();
+            // Console.WriteLine($"Member was born in Ha Noi is: {bornInHN}");
+            foreach (var i in memberList)
+            {
+                if (i.birthPlace1 == "HN")
+                {
+                    Console.WriteLine($"Member Born in Ha Noi : {i.firstName1} {i.lastName1} ");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine($"Nobody Was Born in Ha Noi ");
+                    break;
+                }
+
+            }
         }
 
         public static void SubMenu(List<Member> memberList)
@@ -123,26 +140,26 @@ namespace pj1
         static void Main(string[] args)
         {
             List<Member> memberList = new List<Member>();
-            memberList.Add(new Member("nguyen van", "A", new DateTime(1999, 09, 24), "nam", 1234567890, "HN", 21, false));
+            memberList.Add(new Member("nguyen van", "A", new DateTime(1999, 09, 24), "nam", 1234567890, "HCM", 21, false));
             memberList.Add(new Member("nguyen van", "B", new DateTime(1999, 09, 24), "nam", 1234567890, "QN", 21, true));
             memberList.Add(new Member("nguyen van", "C", new DateTime(1997, 09, 24), "nam", 1234567890, "HN", 23, false));
             memberList.Add(new Member("nguyen van", "D", new DateTime(1998, 09, 24), "nam", 1234567890, "QN", 22, true));
-            memberList.Add(new Member("nguyen van", "E", new DateTime(1999, 09, 24), "nam", 1234567890, "HN", 21, false));
+            memberList.Add(new Member("nguyen van", "E", new DateTime(1999, 09, 24), "nam", 1234567890, "HCM", 21, false));
             memberList.Add(new Member("nguyen van", "F", new DateTime(1999, 09, 24), "nam", 1234567890, "TB", 21, true));
             memberList.Add(new Member("nguyen van", "G", new DateTime(1991, 09, 24), "nam", 1234567890, "ST", 29, false));
-            memberList.Add(new Member("nguyen van", "H", new DateTime(1999, 09, 24), "nam", 1234567890, "HN", 21, true));
-            memberList.Add(new Member("nguyen van", "I", new DateTime(1991, 09, 24), "nam", 1234567890, "HN", 29, false));
+            memberList.Add(new Member("nguyen van", "H", new DateTime(1999, 09, 24), "nam", 1234567890, "HCM", 21, true));
+            memberList.Add(new Member("nguyen van", "I", new DateTime(1991, 09, 24), "nam", 1234567890, "HCM", 29, false));
             memberList.Add(new Member("nguyen van", "K", new DateTime(2000, 09, 24), "nam", 1234567890, "HN", 20, true));
-            memberList.Add(new Member("nguyen van", "A", new DateTime(2003, 09, 24), "nam", 1234567890, "HN", 18, false));
-            memberList.Add(new Member("tran thi", "B", new DateTime(1999, 09, 24), "nu", 1234567890, "HN", 21, false));
+            memberList.Add(new Member("nguyen van", "A", new DateTime(2003, 09, 24), "nam", 1234567890, "HCM", 18, false));
+            memberList.Add(new Member("tran thi", "B", new DateTime(1999, 09, 24), "nu", 1234567890, "HCM", 21, false));
             memberList.Add(new Member("tran thi", "C", new DateTime(2003, 09, 24), "nu", 1234567890, "TB", 18, true));
             memberList.Add(new Member("tran thi", "D", new DateTime(1999, 09, 24), "nu", 1234567890, "DN", 21, false));
             memberList.Add(new Member("tran thi", "E", new DateTime(1998, 09, 24), "nu", 1234567890, "TS", 22, true));
-            memberList.Add(new Member("tran thi", "F", new DateTime(1999, 09, 24), "nu", 1234567890, "HN", 23, false));
+            memberList.Add(new Member("tran thi", "F", new DateTime(1999, 09, 24), "nu", 1234567890, "HCM", 23, false));
             memberList.Add(new Member("tran thi", "G", new DateTime(1997, 09, 24), "nu", 1234567890, "BN", 23, true));
             memberList.Add(new Member("tran thi", "H", new DateTime(1999, 09, 24), "nu", 1234567890, "HN", 21, false));
             memberList.Add(new Member("tran thi", "I", new DateTime(2001, 09, 24), "nu", 1234567890, "HCM", 18, true));
-            memberList.Add(new Member("tran thi", "K", new DateTime(1999, 09, 24), "nu", 1234567890, "HN", 21, false));
+            memberList.Add(new Member("tran thi", "K", new DateTime(1999, 09, 24), "nu", 1234567890, "HCM", 21, false));
 
         Menu:
             Console.WriteLine("---------------------------------------------------------------");
