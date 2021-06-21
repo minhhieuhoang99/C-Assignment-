@@ -7,11 +7,29 @@ namespace pj1
     {
         static int CalculateAge(DateTime dateOfBirth)
         {
-            int age = 0;
-            age = DateTime.Now.Year - dateOfBirth.Year;
-            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
-                age = age - 1;
-            return (int)age;
+            DateTime Now = DateTime.Now;
+            int Years = new DateTime(DateTime.Now.Subtract(dateOfBirth).Ticks).Year - 1;
+            DateTime PastYearDate = dateOfBirth.AddYears(Years);
+            int Months = 0;
+            for (int i = 1; i <= 12; i++)
+            {
+                if (PastYearDate.AddMonths(i) == Now)
+                {
+                    Months = i;
+                    break;
+                }
+                else if (PastYearDate.AddMonths(i) >= Now)
+                {
+                    Months = i - 1;
+                    break;
+                }
+            }
+            int Days = Now.Subtract(PastYearDate.AddMonths(Months)).Days;
+            int Hours = Now.Subtract(PastYearDate).Hours;
+            int Minutes = Now.Subtract(PastYearDate).Minutes;
+            int Seconds = Now.Subtract(PastYearDate).Seconds;
+            Console.WriteLine(String.Format("Age: {0} Year(s) {1} Month(s) {2} Day(s) {3} Hour(s) {4} Second(s)", Years, Months, Days, Hours, Seconds));
+            return Years;
         }
 
         static void GetMaleMember(List<Member> memberList)
@@ -27,22 +45,24 @@ namespace pj1
 
         static void GetOldest(List<Member> memberList)
         {
-            var oldest = (from member in memberList
-                          select member.age1).Max();
-            var oldestMember = (from member in memberList
-                                where member.age1 == oldest
-                                select $" {member.firstName1} {member.lastName1}").First();
-            Console.WriteLine($"The oldest Member is : {oldestMember}  {oldest} year old");
-            // List<string> maxAgeList = new List<string>();
-            // foreach (Member member in memberList)
-            // {
-            //     if (member.age1 == oldest)
-            //     {
-            //         string maxAgeName = member.firstName1 + " " + member.lastName1;
-            //         maxAgeList.Add(maxAgeName);
-            //     }
-            // }
-            // Console.WriteLine($"The oldest Member is : {maxAgeList.First()}  {oldest} year old");
+            // var oldest = (from member in memberList
+            //               select member.age1).Max();
+            // var oldestMember = (from member in memberList
+            //                     where member.age1 == oldest
+            //                     select $" {member.firstName1} {member.lastName1}").First();
+            // Console.WriteLine($"The oldest Member is : {oldestMember}  {oldest} year old");
+
+            List<int> agesList = new List<int>();
+
+            foreach (var member in memberList)
+            {
+                var age = CalculateAge(member.dateOfBirth1);
+                agesList.Add(age);
+                // Console.WriteLine(age);
+            }
+
+            int oldest = agesList.Max();
+            Console.WriteLine("The oldest Age is : " + " " + oldest + " " + " year old");
         }
 
         static void GetFullName(List<Member> memberList)
